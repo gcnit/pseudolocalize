@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Pseudo Localize</title>
+        <style>
+            textarea {
+                height: 200px;
+                width: 100%;
+            }
+            button {
+                width: 40%;
+                font-size: 18px;
+                color: white;
+                background-color: #428bca;
+                border: 1px solid #357ebd;
+                border-radius: 4px;
+            }
+            .pseudoLocalizedText {
+                background: transparent;
+            }
+            .row {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .column {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                height: 250px;
+                width: 40%;
+                margin: 10px;
+            }
+        </style>
+        <script src="pseudolocalize.js" charset="utf-8"></script>
+        <script>
+            const onSubmit = () => {
+                const text = document.getElementById("originalText").value;
+                if (text || document.getElementById("pseudoLocalizedText").value) {
+                    const localizedText = pseudoLocalize(document.getElementById("originalText").value);
+                    document.getElementById("pseudoLocalizedText").value = localizedText;
+                    document.getElementById("pseudoLocalizedTextHiddenDiv").value = localizedText;
+                }
+                document.getElementById("copied").style = "display: none;";
+            }
+
+            const onEnter = (e) => {
+                if(e.keyCode === 13) {
+                    e.preventDefault();
+                    onSubmit();
+                }
+            }
+
+            const copy = () => {
+                const pseudoLocalizedText = document.getElementById("pseudoLocalizedTextHiddenDiv");
+                pseudoLocalizedText.select();
+                document.execCommand("copy");
+                document.getElementById("copied").style = "display: block; color: royalblue;";
+            }
+        </script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="column">
+                <textarea name="originalText" id="originalText" placeholder="Enter your text here" onkeypress=onEnter(event)></textarea>
+                <button id="localizeButton" onclick=onSubmit()>Pseudo Localize!</button>
+            </div>
+            <div class="column">
+                <textarea class="pseudoLocalizedText" name="pseudoLocalizedText" id="pseudoLocalizedText" placeholder="Ƥşḗḗŭŭḓǿǿ Ŀǿǿƈȧȧŀīīẑḗḗḓ ŧḗḗẋŧ ƈǿǿḿḗḗş ħḗḗřḗḗ" disabled=true></textarea>
+                <div id="copied" style = "display: none;">Copied to clipboard!</div>
+                <button id="copyButton" onclick=copy()>Copy!</button>
+            </div>
+        </div>
+        <input id="pseudoLocalizedTextHiddenDiv" style="position: absolute; left: -1000px; top: -1000px;">
+    </body>
+</html>
